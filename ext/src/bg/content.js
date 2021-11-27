@@ -29,11 +29,8 @@ function showTwitchChat() {
         "-webkit-flex-direction": "row"
     })
     
-    
-    if (document.documentElement.getAttribute("dark")){
-        url = `https://www.twitch.tv/embed/${username}/chat?${document.documentElement.getAttribute("dark") ? "darkpopout&" : ""}parent=www.youtube.com"`
-    }
-    
+    url = `https://www.twitch.tv/embed/${username}/chat?${document.documentElement.getAttribute("dark") ? "darkpopout&" : ""}parent=www.youtube.com"`
+
     ytChat.prepend(
         `<iframe style="flex: auto;" src="${url}">
         </iframe>`
