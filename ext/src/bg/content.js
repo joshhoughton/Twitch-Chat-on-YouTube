@@ -12,7 +12,7 @@ function getSuggestion(){
         console.log(s)
         console.log(title)
         if (title.includes(s)){
-            suggestion = suggestion[s]
+            suggestion = suggestions[s]
         }
     }
 
