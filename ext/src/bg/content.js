@@ -6,7 +6,7 @@ suggestions = {
 function getSuggestion(){
     title = document.getElementsByTagName('title')[0].text.toLowerCase()
     
-    suggestion = undefined
+    suggestion = ""
     
     for (const s in suggestions){
         if (title.includes(s)){
@@ -17,7 +17,7 @@ function getSuggestion(){
     return suggestion
 }
 
-function showTwitchChat() {
+function showTwitchChat(username) {
     ytChat = $("ytd-live-chat-frame")
 
     ytChat.empty()
@@ -40,5 +40,5 @@ function showTwitchChat() {
 username = prompt("Enter a Twitch username:", getSuggestion());
 
 if (username) {
-    showTwitchChat()
+    showTwitchChat(username)
 }
