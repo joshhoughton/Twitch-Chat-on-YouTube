@@ -9,8 +9,6 @@ function getSuggestion(){
     suggestion = undefined
     
     for (const s in suggestions){
-        console.log(s)
-        console.log(title)
         if (title.includes(s)){
             suggestion = suggestions[s]
         }
