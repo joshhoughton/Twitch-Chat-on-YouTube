@@ -1,0 +1,27 @@
+{
+  "name": "Twitch Chat on YouTube",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "description": "Click my icon to load Twitch chat on a YouTube live page.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "page_action": {
+    "browser_style": true,
+    "default_title": "Get Twitch Chat on YouTube",
+    "default_icon": {
+        "19": "icons/icon19.png",
+        "38": "icons/icon38.png"
+    },
+    "show_matches": ["https://www.youtube.com/watch?v=*"]
+  },
+  "permissions": [
+      "activeTab"
+  ],
+  "background": {
+    "scripts": ["src/bg/background.js"]
+  }
+}
