@@ -1,6 +1,6 @@
 {
   "name": "Twitch Chat on YouTube",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 3,
   "description": "Click my icon to load Twitch chat on a YouTube live page.",
   "icons": {

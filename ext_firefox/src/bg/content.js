@@ -1,5 +1,3 @@
-console.log("hi fireox")
-
 suggestions = {
     "esl": "esl_csgo",
     "blast": "blastpremier"
