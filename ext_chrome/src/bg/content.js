@@ -24,7 +24,8 @@ function showTwitchChat(username) {
     
     ytChat.css({
         "flex-direction": "row",
-        "-webkit-flex-direction": "row"
+        "-webkit-flex-direction": "row",
+        "height": "90vh" 
     })
     
     url = `https://www.twitch.tv/embed/${username}/chat?${document.documentElement.getAttribute("dark") ? "darkpopout&" : ""}parent=www.youtube.com"`
