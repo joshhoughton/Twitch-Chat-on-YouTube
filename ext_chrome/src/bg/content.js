@@ -1,6 +1,7 @@
 suggestions = {
     "esl": "esl_csgo",
-    "blast": "blastpremier"
+    "blast": "blastpremier",
+    "pgl": "pgl"
 }
 
 function getSuggestion(){
@@ -36,7 +37,6 @@ function showTwitchChat(username) {
     )
     
 }
-
 
 username = prompt("Enter a Twitch username:", getSuggestion());
 
