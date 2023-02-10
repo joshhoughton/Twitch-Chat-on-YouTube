@@ -1,7 +1,8 @@
 suggestions = {
     "esl": "esl_csgo",
     "blast": "blastpremier",
-    "pgl": "pgl"
+    "pgl": "pgl",
+    "iem": "esl_csgo"
 }
 
 function getSuggestion(){
