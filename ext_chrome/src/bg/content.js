@@ -30,7 +30,7 @@ function showTwitchChat(username) {
         "height": "90vh" 
     })
     
-    url = `https://www.twitch.tv/embed/${username}/chat?${document.documentElement.getAttribute("dark") ? "darkpopout&" : ""}parent=www.youtube.com"`
+    url = `https://www.twitch.tv/embed/${username}/chat?${document.documentElement.getAttribute("dark") == '' ? "darkpopout&" : ""}parent=www.youtube.com"`
 
     ytChat.prepend(
         `<iframe style="flex: auto;" src="${url}">

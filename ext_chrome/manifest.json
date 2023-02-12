@@ -1,6 +1,6 @@
 {
   "name": "Twitch Chat for YouTube™",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "manifest_version": 3,
   "description": "Click the extension to load Twitch chat onto YouTube live page, replacing YouTube chat.",
   "icons": {
