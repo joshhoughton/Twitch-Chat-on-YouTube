@@ -1,4 +1,22 @@
 
+async function fetchStreamChatData() {
+    const response = await fetch('https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/stream_chat.json');
+    if (!response.ok) {
+        throw new Error('Erro ao buscar dados do JSON');
+    }
+    return response.json();
+}
+
+async function getUsernameFromJson(youtubeChannelName) {
+    try {
+        const data = await fetchStreamChatData();
+        return data[youtubeChannelName];
+    } catch (error) {
+        console.error('Erro ao buscar dados do JSON:', error);
+        return null;
+    }
+}
+
 function storeTwitchChatForThatYoutuber(twitchUsername, youtubeUserName){
     chrome.storage.local.set({[youtubeUserName]: twitchUsername});
 }
@@ -61,10 +79,19 @@ function askUserFromTwitchUsername(){
 */
 async function main() {
     const youtubeUserName = getChannelId();
-    console.log("username:",youtubeUserName)
-    const twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
-    console.log("Returned from local storage: ", twitchUsername);
-    if (twitchUsername === undefined) {
+    console.log("username:", youtubeUserName);
+
+    // Primeiro, tente obter o nome de usuário do JSON
+    let twitchUsername = await getUsernameFromJson(youtubeUserName);
+    console.log("Returned from JSON: ", twitchUsername);
+
+    // Se não estiver no JSON, tente obter do armazenamento local
+    if (!twitchUsername) {
+        twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
+        console.log("Returned from local storage: ", twitchUsername);
+    }
+
+    if (!twitchUsername) {
         console.log('User not stored yet. Returned: ', twitchUsername);
         const username = askUserFromTwitchUsername();
         if (username) {
