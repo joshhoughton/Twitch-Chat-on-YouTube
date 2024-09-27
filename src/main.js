@@ -95,18 +95,14 @@ async function main() {
     }
 
     let youtubeUserName = getChannelId();
-    console.log("username:", youtubeUserName);
 
     let twitchUsername = await getTwitchUsernameFromGithubDatabase(youtubeUserName);
-    console.log("Returned from JSON: ", twitchUsername);
 
     if (!twitchUsername) {
         twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
-        console.log("Returned from local storage: ", twitchUsername);
     }
 
     if (!twitchUsername) {
-        console.log('User not stored yet. Returned: ', twitchUsername);
         let username = askUserFromTwitchUsername();
         if (username) {
             storeTwitchChatForThatYoutuber(username, getChannelId());
