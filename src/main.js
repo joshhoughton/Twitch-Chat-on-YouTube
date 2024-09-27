@@ -96,10 +96,10 @@ async function main() {
 
     let youtubeUserName = getChannelId();
 
-    let twitchUsername = await getTwitchUsernameFromGithubDatabase(youtubeUserName);
+    let twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
 
     if (!twitchUsername) {
-        twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
+        twitchUsername = await getTwitchUsernameFromGithubDatabase(youtubeUserName);
     }
 
     if (!twitchUsername) {
