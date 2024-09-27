@@ -1,6 +1,6 @@
 
 async function fetchStreamChatData() {
-    const response = await fetch('https://raw.githubusercontent.com/seu-usuario/seu-repositorio/main/stream_chat.json');
+    const response = await fetch('https://raw.githubusercontent.com/koobzaar/Twitch-Chat-on-YouTube/refs/heads/master/channels/stream_chat.json');
     if (!response.ok) {
         throw new Error('Erro ao buscar dados do JSON');
     }
