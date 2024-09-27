@@ -22,7 +22,7 @@ function storeTwitchChatForThatYoutuber(twitchUsername, youtubeUserName){
 }
 
 function getYoutubeVideoHeight(){
-    let youtubeVideo = document.querySelector('video'); // Supondo que o vídeo do YouTube seja um elemento <video>
+    let youtubeVideo = document.querySelector('video'); 
     return youtubeVideo.clientHeight;
 }
 
@@ -32,7 +32,7 @@ function getChannelId() {
     
     if (anchorElement) {
         
-        return anchorElement.href.replace('https://www.youtube.com/@', '').toLowerCase();
+        return anchorElement.href.replace('https://www.youtube.com/', '').toLowerCase();
     } else {
         return null;
     }
