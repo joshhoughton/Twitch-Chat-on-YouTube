@@ -1,18 +1,18 @@
 
-async function fetchStreamChatData() {
+async function onlineFetchStreamerChats() {
     const response = await fetch('https://raw.githubusercontent.com/koobzaar/Twitch-Chat-on-YouTube/refs/heads/master/channels/stream_chat.json');
     if (!response.ok) {
-        throw new Error('Erro ao buscar dados do JSON');
+        throw new Error('Error fetching data:');
     }
     return response.json();
 }
 
-async function getUsernameFromJson(youtubeChannelName) {
+async function getTwitchUsernameFromGithubDatabase(youtubeChannelName) {
     try {
-        const data = await fetchStreamChatData();
+        const data = await onlineFetchStreamerChats();
         return data[youtubeChannelName];
     } catch (error) {
-        console.error('Erro ao buscar dados do JSON:', error);
+        console.error('Error fetching data: ', error);
         return null;
     }
 }
@@ -73,7 +73,7 @@ async function getUsernameFromLocalStorage(youtubeChannelName) {
 }
 
 function askUserFromTwitchUsername(){
-    return prompt("Enter a Twitch username:");
+    return prompt("Enter the streamer Twitch username:");
 }
 
 async function main() {
@@ -82,7 +82,7 @@ async function main() {
     let currentTimestamp = Date.now();
     
     if (currentTimestamp - storedTimestamp < 2000) {
-        let username = prompt("Enter the new Twitch Channel Chat for this current YouTube Channel:");
+        let username = askUserFromTwitchUsername();
         if (username) {
             storeTwitchChatForThatYoutuber(username, getChannelId());
             showTwitchChat(username);
@@ -97,7 +97,7 @@ async function main() {
     let youtubeUserName = getChannelId();
     console.log("username:", youtubeUserName);
 
-    let twitchUsername = await getUsernameFromJson(youtubeUserName);
+    let twitchUsername = await getTwitchUsernameFromGithubDatabase(youtubeUserName);
     console.log("Returned from JSON: ", twitchUsername);
 
     if (!twitchUsername) {
