@@ -22,12 +22,16 @@ function storeTwitchChatForThatYoutuber(twitchUsername, youtubeUserName){
 }
 
 function getYoutubeVideoHeight(){
-    const youtubeVideo = document.querySelector('video'); // Supondo que o vídeo do YouTube seja um elemento <video>
+    let youtubeVideo = document.querySelector('video'); // Supondo que o vídeo do YouTube seja um elemento <video>
     return youtubeVideo.clientHeight;
 }
 function getChannelId() {
-    const anchorElement = document.querySelector('a.yt-simple-endpoint.style-scope.yt-formatted-string');
+    let anchorElement = document.querySelector('a.yt-simple-endpoint.style-scope.yt-formatted-string');
+    
     if (anchorElement) {
+        console.log('Elemento encontrado:', anchorElement);
+        console.log('Href do elemento:', anchorElement.href);
+        
         return anchorElement.href.replace('https://www.youtube.com/@', '').toLowerCase();
     } else {
         console.error('Elemento não encontrado');
@@ -41,7 +45,7 @@ function getYoutubeChatFrame(){
 }
 
 function showTwitchChat(username) {
-    const youtubeChatFrame = getYoutubeChatFrame()
+    let youtubeChatFrame = getYoutubeChatFrame()
 
     youtubeChatFrame.empty()
 
@@ -78,14 +82,12 @@ function askUserFromTwitchUsername(){
     Fix: Add a html support for the extension that returns a list of all users and a button to change it.
 */
 async function main() {
-    const youtubeUserName = getChannelId();
+    let youtubeUserName = getChannelId();
     console.log("username:", youtubeUserName);
 
-    // Primeiro, tente obter o nome de usuário do JSON
     let twitchUsername = await getUsernameFromJson(youtubeUserName);
     console.log("Returned from JSON: ", twitchUsername);
 
-    // Se não estiver no JSON, tente obter do armazenamento local
     if (!twitchUsername) {
         twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
         console.log("Returned from local storage: ", twitchUsername);
@@ -93,7 +95,7 @@ async function main() {
 
     if (!twitchUsername) {
         console.log('User not stored yet. Returned: ', twitchUsername);
-        const username = askUserFromTwitchUsername();
+        let username = askUserFromTwitchUsername();
         if (username) {
             storeTwitchChatForThatYoutuber(username, getChannelId());
             showTwitchChat(username);
