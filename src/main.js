@@ -25,16 +25,15 @@ function getYoutubeVideoHeight(){
     let youtubeVideo = document.querySelector('video'); // Supondo que o vídeo do YouTube seja um elemento <video>
     return youtubeVideo.clientHeight;
 }
-function getChannelId() {
-    let anchorElement = document.querySelector('a.yt-simple-endpoint.style-scope.yt-formatted-string');
+
+function getChannelId() { 
+    let anchorElement = "";
+    anchorElement = document.querySelector('a.yt-simple-endpoint.style-scope.yt-formatted-string');
     
     if (anchorElement) {
-        console.log('Elemento encontrado:', anchorElement);
-        console.log('Href do elemento:', anchorElement.href);
         
         return anchorElement.href.replace('https://www.youtube.com/@', '').toLowerCase();
     } else {
-        console.error('Elemento não encontrado');
         return null;
     }
 }
@@ -43,6 +42,7 @@ function getChannelId() {
 function getYoutubeChatFrame(){
     return $("ytd-live-chat-frame")
 }
+
 
 function showTwitchChat(username) {
     let youtubeChatFrame = getYoutubeChatFrame()
@@ -58,7 +58,7 @@ function showTwitchChat(username) {
     url = `https://www.twitch.tv/embed/${username}/chat?darkpopout&parent=www.youtube.com"`
 
     youtubeChatFrame.prepend(
-        `<iframe style="flex: auto;" src="${url}">
+        `<iframe id="twitch_iframe" style="flex: auto;" src="${url}">
         </iframe>`
     )
     
@@ -76,12 +76,24 @@ function askUserFromTwitchUsername(){
     return prompt("Enter a Twitch username:");
 }
 
-/*
-
-    TODO: If user declare the twitch username wrong, there's no way to change it.
-    Fix: Add a html support for the extension that returns a list of all users and a button to change it.
-*/
 async function main() {
+
+    let storedTimestamp = localStorage.getItem('storedTimestamp');
+    let currentTimestamp = Date.now();
+    
+    if (currentTimestamp - storedTimestamp < 2000) {
+        let username = prompt("Enter the new Twitch Channel Chat for this current YouTube Channel:");
+        if (username) {
+            storeTwitchChatForThatYoutuber(username, getChannelId());
+            showTwitchChat(username);
+            localStorage.setItem('storedTimestamp', currentTimestamp);
+            return;
+        }
+    } 
+    else{
+        localStorage.setItem('storedTimestamp', currentTimestamp);
+    }
+
     let youtubeUserName = getChannelId();
     console.log("username:", youtubeUserName);
 
