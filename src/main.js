@@ -10,7 +10,7 @@ async function onlineFetchStreamerChats() {
 async function getTwitchUsernameFromGithubDatabase(youtubeChannelName) {
     try {
         const data = await onlineFetchStreamerChats();
-        return data[youtubeChannelName];
+        return data[youtubeChannelName.toLowerCase()];
     } catch (error) {
         console.error('Error fetching data: ', error);
         return null;
