@@ -1,120 +1,123 @@
-
-async function onlineFetchStreamerChats() {
-    const response = await fetch('https://raw.githubusercontent.com/koobzaar/Twitch-Chat-on-YouTube/refs/heads/master/channels/stream_chat.json');
+async function fetchStreamerChatsFromGithub() {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/koobzaar/Twitch-Chat-on-YouTube/refs/heads/master/channels/stream_chat.json",
+    );
     if (!response.ok) {
-        throw new Error('Error fetching data:');
+      throw new Error("Error fetching data:");
     }
     return response.json();
 }
-
-async function getTwitchUsernameFromGithubDatabase(youtubeChannelName) {
+  
+async function fetchTwitchUsernameFromGithub(youtubeChannelName) {
     try {
-        const data = await onlineFetchStreamerChats();
-        return data[youtubeChannelName.toLowerCase()];
+      const data = await fetchStreamerChatsFromGithub();
+      return data[youtubeChannelName.toLowerCase()];
     } catch (error) {
-        console.error('Error fetching data: ', error);
-        return null;
+      console.error("Error fetching data: ", error);
+      return null;
     }
 }
-
-function storeTwitchChatForThatYoutuber(twitchUsername, youtubeUserName){
-    chrome.storage.local.set({[youtubeUserName]: twitchUsername});
+  
+function saveTwitchChatForYoutubeUser(twitchUsername, youtubeUserName) {
+    chrome.storage.local.set({ [youtubeUserName]: twitchUsername });
 }
-
-function getYoutubeVideoHeight(){
-    let youtubeVideo = document.querySelector('video');
+  
+function fetchYoutubeVideoHeight() {
+    let youtubeVideo = document.querySelector("video");
     return youtubeVideo.clientHeight;
 }
-
-function getChannelId() { 
+  
+function fetchYoutubeChannelId() {
     let anchorElement = "";
-    anchorElement = document.querySelector('ytd-video-owner-renderer a.yt-simple-endpoint.style-scope.yt-formatted-string');
-    
+    anchorElement = document.querySelector(
+      "ytd-video-owner-renderer a.yt-simple-endpoint.style-scope.yt-formatted-string",
+    );
+  
     if (anchorElement) {
-        
-        return anchorElement.href.replace('https://www.youtube.com/@', '').toLowerCase();
+      return anchorElement.href
+        .replace("https://www.youtube.com/@", "")
+        .toLowerCase();
     } else {
-        return null;
+      return null;
     }
 }
-
-function isDarkMode() {
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;        
+  
+function checkIfDarkMode() {
+    return (
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    );
 }
-
-
-function getYoutubeChatFrame(){
-    return $("ytd-live-chat-frame")
+  
+function fetchYoutubeChatFrame() {
+    return $("ytd-live-chat-frame");
 }
-
-
-function showTwitchChat(username) {
-    let youtubeChatFrame = getYoutubeChatFrame()
-
-    youtubeChatFrame.empty()
-
+  
+function displayTwitchChat(username) {
+    let youtubeChatFrame = fetchYoutubeChatFrame();
+  
+    youtubeChatFrame.empty();
+  
     youtubeChatFrame.css({
-        "flex-direction": "row",
-        "-webkit-flex-direction": "row",
-        "height": `${getYoutubeVideoHeight()}px`
-    })
-    
-    url = `https://www.twitch.tv/embed/${username}/chat?${ isDarkMode() ? "darkpopout" : ""}&parent=www.youtube.com"`
-
+      "flex-direction": "row",
+      "-webkit-flex-direction": "row",
+      height: `${fetchYoutubeVideoHeight()}px`,
+    });
+  
+    url = `https://www.twitch.tv/embed/${username}/chat?${checkIfDarkMode() ? "darkpopout" : ""}&parent=www.youtube.com"`;
+  
     youtubeChatFrame.prepend(
-        `<iframe id="twitch_iframe" style="flex: auto;" src="${url}">
-        </iframe>`
-    )
-    
+      `<iframe id="twitch_iframe" style="flex: auto;" src="${url}">
+            </iframe>`,
+    );
 }
-
-async function getUsernameFromLocalStorage(youtubeChannelName) {
-    return new Promise((resolve, reject) => {
-        chrome.storage.local.get([youtubeChannelName], function(result) {
-            resolve(result[youtubeChannelName]);
-        });
+  
+async function fetchUsernameFromLocalStorage(youtubeChannelName) {
+    return new Promise((resolve) => {
+      chrome.storage.local.get([youtubeChannelName], function (result) {
+        resolve(result[youtubeChannelName]);
+      });
     });
 }
-
-function askUserFromTwitchUsername(){
+  
+function promptForTwitchUsername() {
     return prompt("Enter the streamer Twitch username:");
 }
-
+  
 async function main() {
-
-    let storedTimestamp = localStorage.getItem('storedTimestamp');
+    let storedTimestamp = localStorage.getItem("storedTimestamp");
     let currentTimestamp = Date.now();
-    
+  
     if (currentTimestamp - storedTimestamp < 2000) {
-        let username = askUserFromTwitchUsername();
-        if (username) {
-            storeTwitchChatForThatYoutuber(username, getChannelId());
-            showTwitchChat(username);
-            localStorage.setItem('storedTimestamp', currentTimestamp);
-            return;
-        }
-    } 
-    else{
-        localStorage.setItem('storedTimestamp', currentTimestamp);
-    }
-
-    let youtubeUserName = getChannelId();
-
-    let twitchUsername = await getUsernameFromLocalStorage(youtubeUserName);
-
-    if (!twitchUsername) {
-        twitchUsername = await getTwitchUsernameFromGithubDatabase(youtubeUserName);
-    }
-
-    if (!twitchUsername) {
-        let username = askUserFromTwitchUsername();
-        if (username) {
-            storeTwitchChatForThatYoutuber(username, getChannelId());
-            showTwitchChat(username);
-        }
+      let username = promptForTwitchUsername();
+      if (username) {
+        saveTwitchChatForYoutubeUser(username, fetchYoutubeChannelId());
+        displayTwitchChat(username);
+        localStorage.setItem("storedTimestamp", currentTimestamp);
+        return;
+      }
     } else {
-        showTwitchChat(twitchUsername);
+      localStorage.setItem("storedTimestamp", currentTimestamp);
+    }
+  
+    let youtubeUserName = fetchYoutubeChannelId();
+  
+    let twitchUsername = await fetchUsernameFromLocalStorage(youtubeUserName);
+  
+    if (!twitchUsername) {
+      twitchUsername = await fetchTwitchUsernameFromGithub(youtubeUserName);
+    }
+  
+    if (!twitchUsername) {
+      let username = promptForTwitchUsername();
+      if (username) {
+        saveTwitchChatForYoutubeUser(username, fetchYoutubeChannelId());
+        displayTwitchChat(username);
+      }
+    } else {
+      displayTwitchChat(twitchUsername);
     }
 }
-
+  
 main();
+  
