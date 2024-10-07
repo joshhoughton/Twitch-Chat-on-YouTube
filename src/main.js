@@ -38,6 +38,10 @@ function getChannelId() {
     }
 }
 
+function isDarkMode() {
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;        
+}
+
 
 function getYoutubeChatFrame(){
     return $("ytd-live-chat-frame")
@@ -55,7 +59,7 @@ function showTwitchChat(username) {
         "height": `${getYoutubeVideoHeight()}px`
     })
     
-    url = `https://www.twitch.tv/embed/${username}/chat?darkpopout&parent=www.youtube.com"`
+    url = `https://www.twitch.tv/embed/${username}/chat?${ isDarkMode() ? "darkpopout" : ""}&parent=www.youtube.com"`
 
     youtubeChatFrame.prepend(
         `<iframe id="twitch_iframe" style="flex: auto;" src="${url}">
