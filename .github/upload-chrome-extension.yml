@@ -1,0 +1,28 @@
+name: Upload Chrome Extension
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  zip_and_upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create ZIP file
+        run: mkdir -p dist && zip -r dist/extension.zip manifest.json src/ _locales/ channels/ icons/ js/jquery/jquery.min.js
+
+      - name: Upload & release
+        uses: mnao305/chrome-extension-upload@v5.0.0
+        with:
+          file-path: dist/extension.zip
+          extension-id: ${{ secrets.EXTENSION_ID }}
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
+          publish: false
+
