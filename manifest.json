@@ -10,7 +10,7 @@
   },
   "default_locale": "en",
   "action": {
-    "default_title": "Get Twitch Chat on YouTube"
+    "default_title": "Get Twitch Chat on YouTube (double click to change chat)"
   },
   "permissions": ["storage", "activeTab", "scripting"],
   "background": {
