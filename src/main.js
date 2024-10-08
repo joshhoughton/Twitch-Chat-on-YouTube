@@ -1,4 +1,4 @@
-async function onlineFetchStreamerChats() {
+async function fetchStreamerChatsFromGithub() {
   const response = await fetch(
     'https://raw.githubusercontent.com/joshhoughton/Twitch-Chat-on-YouTube/refs/heads/master/channels/stream_chat.json'
   );
