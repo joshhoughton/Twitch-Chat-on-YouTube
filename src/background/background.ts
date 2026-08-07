@@ -1,6 +1,10 @@
 chrome.action.onClicked.addListener((tab) => {
+  if (tab.id === undefined) {
+    return;
+  }
+
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
-    files: ['js/jquery/jquery.min.js', 'src/main.js'],
+    files: ['main.js'],
   });
 });

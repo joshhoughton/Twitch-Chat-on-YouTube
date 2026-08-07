@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
  
 
+## [0.2.0] - 2026-08-08
+
+### Fixed
+
+- Twitch chat now uses the full space used by YouTube chat.
+
+
 ## [0.1.1] - 2024-10-08
 
 ### Fixed
