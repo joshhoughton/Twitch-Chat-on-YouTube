@@ -1,5 +1,20 @@
 {
+  "name": "twitch-chat-on-youtube",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rolldown -c && node scripts/copy-static.mjs",
+    "watch": "node scripts/copy-static.mjs && rolldown -c --watch",
+    "typecheck": "tsc --noEmit"
+  },
   "devDependencies": {
-    "prettier": "^3.3.3"
+    "@types/chrome": "^0.2.5",
+    "@types/jquery": "^4.0.1",
+    "prettier": "^3.3.3",
+    "rolldown": "^1.2.3",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "jquery": "^4.0.0"
   }
 }
