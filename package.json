@@ -2,6 +2,9 @@
   "name": "twitch-chat-on-youtube",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "build": "rolldown -c && node scripts/copy-static.mjs",
     "watch": "node scripts/copy-static.mjs && rolldown -c --watch",
