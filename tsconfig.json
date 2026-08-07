@@ -8,7 +8,7 @@
     "noEmit": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "types": ["chrome", "jquery"]
+    "types": ["chrome"]
   },
   "include": ["src/**/*.ts", "rolldown.config.ts"]
 }

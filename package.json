@@ -9,12 +9,8 @@
   },
   "devDependencies": {
     "@types/chrome": "^0.2.5",
-    "@types/jquery": "^4.0.1",
     "prettier": "^3.3.3",
     "rolldown": "^1.2.3",
     "typescript": "^7.0.2"
-  },
-  "dependencies": {
-    "jquery": "^4.0.0"
   }
 }
