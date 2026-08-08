@@ -8,11 +8,17 @@
   "scripts": {
     "build": "rolldown -c && node scripts/copy-static.mjs",
     "watch": "node scripts/copy-static.mjs && rolldown -c --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "checks": "npm run lint && npm run format:check && npm run typecheck"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.5",
-    "prettier": "^3.3.3",
+    "oxfmt": "^0.62.0",
+    "oxlint": "^1.77.0",
     "rolldown": "^1.2.3",
     "typescript": "^7.0.2"
   }

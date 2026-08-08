@@ -1,9 +1,6 @@
 import { displayTwitchChat } from './chat/display';
 import { fetchTwitchUsernameFromGithub } from './github';
-import {
-  loadTwitchUsername,
-  saveTwitchUsername,
-} from './storage';
+import { loadTwitchUsername, saveTwitchUsername } from './storage';
 import { getChannelId } from './youtube';
 
 function promptForTwitchUsername(): string | null {
