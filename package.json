@@ -13,10 +13,12 @@
     "lint:fix": "oxlint --fix",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "checks": "npm run lint && npm run format:check && npm run typecheck"
+    "fallow": "fallow dead-code",
+    "checks": "npm run typecheck && npm run lint && npm run format:check && npm run fallow"
   },
   "devDependencies": {
     "@types/chrome": "^0.2.5",
+    "fallow": "^3.14.0",
     "oxfmt": "^0.62.0",
     "oxlint": "^1.77.0",
     "rolldown": "^1.2.3",
